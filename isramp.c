@@ -1,6 +1,9 @@
 #include <unistd.h>
 #include <stdio.h>
-
+/*
+ * This file takes input from nc as below: 
+ * nc acq2106_112 4210 | ./isramp
+ */
 int main(int argc, char* argv[]) {
 
     unsigned xx;
