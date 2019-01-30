@@ -13,20 +13,10 @@ int main(int argc, char* argv[]) {
 
     while(1) {
 
-      //read(STDIN_FILENO, buffer, 416);
       fread(buffer, sizeof(char), 416, stdin); // read 104 channels of data.
       aa = *(int*)&buffer[384];
 
-      if (xx1 == aa) {
-         // printf("xx1 == aa \n");
-         // printf("%d , %d \n", xx1, aa );
-         //continue;
-      }
       if (aa == xx1 + 1) {
-        //printf("Success! \n");
-        //printf("ii = %d \n", ii);
-        //printf("%d , %d \n", xx1, aa );
-        //continue;
       } else {
         if (aa != xx1 + 1){
           if (++error_report < 100000){
