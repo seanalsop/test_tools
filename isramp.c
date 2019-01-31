@@ -1,5 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 /*
  * This file takes input from nc as below:
  * nc acq2106_112 4210 | ./isramp
@@ -14,27 +16,29 @@ int main(int argc, char *argv[]) {
     unsigned errors = 0;
     unsigned error_report = 0;
     unsigned int aa = 0;
-    unsigned buffer[104];
+
     int opt;
-    while((opt = getopt(argc, argv, ":if:mc")) != -1)
+    while((opt = getopt(argc, argv, "m:c:")) != -1)
     {
       switch(opt) {
         case 'm':
-          maxcols = opt;
+          maxcols = atoi(optarg);
+          printf("%i\n", atoi(optarg));
           break;
         case 'c':
-          countcol = opt;
+          countcol = atoi(optarg);
+          printf("%i\n", atoi(optarg));
           break;
         default:
           printf("No args given %d \n", opt);
           break;
       }
     }
-
+    unsigned buffer[maxcols];
     while(1) {
 
-      fread(buffer, sizeof(unsigned), 104, stdin); // read 104 channels of data.
-      aa = buffer[96];
+      fread(buffer, sizeof(unsigned), maxcols, stdin); // read 104 channels of data.
+      aa = buffer[countcol];
 
       if (aa == xx1 + 1) {
       } else {
