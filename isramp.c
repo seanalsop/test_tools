@@ -4,7 +4,7 @@
 #include <stdlib.h>
 /*
  * This file takes input from nc as below:
- * nc acq2106_112 4210 | ./isramp
+ * nc acq2106_112 4210 | pv | ./isramp
  */
 int main(int argc, char *argv[]) {
 
@@ -60,9 +60,9 @@ int main(int argc, char *argv[]) {
         }
       }
 
-      if (ii % 100000 == 0) {
-      printf("Loops completed = %d \n \n", ii);
-      }
+      // if (ii % 100000 == 0) {
+      // printf("Loops completed = %d \n \n", ii);
+      // }
       ii++;
       xx1 = aa;
       }
