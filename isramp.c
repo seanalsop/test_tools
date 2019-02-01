@@ -60,9 +60,6 @@ int main(int argc, char *argv[]) {
         }
       }
 
-      // if (ii % 100000 == 0) {
-      // printf("Loops completed = %d \n \n", ii);
-      // }
       ii++;
       xx1 = aa;
       }
