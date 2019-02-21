@@ -40,9 +40,7 @@ int main(int argc, char *argv[]) {
       }
     }
     unsigned buffer[maxcols];
-    while(1) {
-
-      fread(buffer, sizeof(unsigned), maxcols, stdin); // read 104 channels of data.
+    while(fread(buffer, sizeof(unsigned), maxcols, stdin) == maxcols){
       aa = buffer[countcol];
 
       if (aa == xx1 + step) {
@@ -50,7 +48,7 @@ int main(int argc, char *argv[]) {
         if (aa != xx1 + step){
           if (++error_report < 100000){
 
-            printf("%012llx 0x%08x 0x%08x **ERROR** Sample jump: %d\n",
+            printf("%012lld 0x%08x 0x%08x **ERROR** Sample jump: %d\n",
             ii, xx1, aa, aa - xx1);
             }
           ++errors;
