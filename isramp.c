@@ -43,7 +43,8 @@ int main(int argc, char *argv[]) {
     while(fread(buffer, sizeof(unsigned), maxcols, stdin) == maxcols){
       aa = buffer[countcol];
 
-      if (aa == xx1 + step) {
+      if (ii == 1 || aa == xx1 + step) {
+	      ;
       } else {
         if (aa != xx1 + step){
           if (++error_report < 100000){
