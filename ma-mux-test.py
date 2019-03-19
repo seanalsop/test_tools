@@ -52,7 +52,7 @@ def run_analysis(args):
         if args.plot == 1:
             # plt.plot(sample_counts, mux_pattern)
             plt.clf()
-            n, bins, patches = plt.hist(diffs)
+            n, bins, patches = plt.hist(diffs, bins=30)
             # plt.show()
             plt.pause(0.1)
 
