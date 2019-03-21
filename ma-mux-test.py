@@ -18,11 +18,8 @@ def run_analysis(args):
     #change_indexes = []
     while True:
         change_indexes = []
-        # data = np.fromfile(args.file, dtype=np.int32) # load data as longs
-        data = sys.stdin.read(args.read_mbytes*1024**2)
-        # data = np.frombuffer(data)
+        data = sys.stdin.read(args.read_kbytes*1024)
         data = np.fromstring(data, dtype=np.int32)
-
 
         # Pull out the points of interest from the spad.
         mux_changing = data[args.chans + 2::104]
@@ -43,17 +40,9 @@ def run_analysis(args):
             if item - change_indexes[num-1] < 0:
                 print "item, index_num = ", item, change_indexes[num-1]
 
-        # Print each point in a column
-        # for num, item in enumerate(sample_counts):
-        #     print "{:>8} {:>8} {:>8}".format(sample_counts[num], \
-        #     mux_changing[num], mux_pattern[num])
-        # for num, item in enumerate(diffs):
-        #     print num, item
         if args.plot == 1:
-            # plt.plot(sample_counts, mux_pattern)
             plt.clf()
             n, bins, patches = plt.hist(diffs, bins=30)
-            # plt.show()
             plt.pause(0.1)
 
     return None
@@ -71,7 +60,7 @@ def run_main():
     parser.add_argument('--plot', default=0, type=int,
     help='Whether or not to plot the sample count vs mux pattern.')
 
-    parser.add_argument('--read_mbytes', default=416, type=int,
+    parser.add_argument('--read_kbytes', default=41600, type=int,
     help='How many megabytes to read at once from STDIN.')
 
     run_analysis(parser.parse_args())
