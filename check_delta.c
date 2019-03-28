@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     int countcol = 96; // Column where the ramp is
     int delta = 1; // Default step. For sample counter in spad step = 1.
     unsigned xx;
-    int xx1 = 0;
+    signed long int xx1 = 0;
     unsigned long long ii = 1;
     unsigned errors = 0;
     unsigned error_report = 0;
@@ -39,16 +39,22 @@ int main(int argc, char *argv[]) {
           break;
       }
     }
-    unsigned buffer[maxcols];
+    long signed buffer[maxcols];
     while(1) {
 
       fread(buffer, sizeof(unsigned), maxcols, stdin); // read 104 channels of data.
       aa = buffer[countcol];
-
+      if (ii == 1) { // if first loop: skip
+          ii++;
+          xx1 = aa;
+          continue;
+      }
       if (aa == xx1 + delta) {
       } else {
-        if (abs(aa - xx1) > delta){
+        //printf("Sample now: %d, sample before: %d, delta = %d \n", aa, xx1, aa - xx1);
+        if (abs(aa - xx1) < delta){
           // if (aa == xx1) {
+
           printf("Loop = %d, last sample = %d, current sample = %d, delta = %d \n" , ii, xx1, aa, delta);
           if (++error_report < 100000){
 
