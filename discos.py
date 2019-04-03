@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
 
+"""discos.py checks a stream of data for discontinuities.
+It then compares the positions of the discos to
+positions of the mux pattern changes in the
+SPAD.
+"""
+
+
 import argparse
 import numpy as np
 import sys
