@@ -5,6 +5,11 @@
 It then compares the positions of the discos to
 positions of the mux pattern changes in the
 SPAD.
+
+Usage:
+
+nc UUT 4210 | pv | tee >(./discos.py) >(./isramp) > /dev/null
+
 """
 
 
@@ -32,7 +37,7 @@ def run_disco_check(args):
             if item - ch[index - 1] > args.disco_size:
                 #print "Disco found at index: ", index
                 # print item - ch[index - 1]
-                for place, val in enumerate(mux_pattern[index - 100 : index + 100]):
+                for place, val in enumerate(mux_pattern[index - 150: index + 150]):
                     if place == 0:
                         prev = val
                         continue
