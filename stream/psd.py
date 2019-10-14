@@ -23,15 +23,20 @@ def get_args():
 
 
 def perform_psd(channel, fs):
-
+   # print("Max pxx_den: {}".format(np.max(Pxx_den)))
+    print("Max ch: {}".format(np.max(channel)))
+    channel = channel / 10
     # Calculate the periodogram.
-    f, Pxx_den = signal.periodogram(channel, window='hanning')
+    f, Pxx_den = signal.periodogram(channel, fs, window='blackman')
+    print("Max pxx_den: {}".format(np.max(Pxx_den)))
 
     # Normalise so we don't go over 0dB.
-    Pxx_den = Pxx_den / np.max(Pxx_den)
-
+    #Pxx_den = Pxx_den / np.max(Pxx_den)
+    #Pxx_den = Pxx_den / 10
+    print("Max pxx_den: {}".format(np.max(Pxx_den)))
     # Take the log so we can view it properly.
     Pxx_den = 10*np.log10(Pxx_den)
+    print("Max pxx_den: {}".format(np.max(Pxx_den)))
     return [f, Pxx_den]
 
 
@@ -55,20 +60,23 @@ def main():
         data = []
         # read in 1M samples from stdin
         print("Reading data now")
-        rawdata = sys.stdin.buffer.read(int(1e5 * nchan))
+        rawdata = sys.stdin.buffer.read(int(1e6 * nchan))
         print("Read data")
         rawdata = np.fromstring(rawdata, dtype=_dtype)
 
-        for ch in range(0, 1):
+        for ch in range(0, 4):
             data.append(np.array(rawdata[ch::nchan]))
 
-        data[0] = data[0] / 32768 * 10
-
+        for pos, ch in enumerate(data):
+            data[pos] = ch / 32768 * 10
+#        data[0] = data[0] / 32768 * 10
+        #plt.plot(data[0])
+        #plt.show()
         with concurrent.futures.ThreadPoolExecutor() as executor:
             # Here we will get a thread per channel.
             results = executor.map(perform_psd, data, repeat(fs))
             for result in results:
-                print(result[0], result[1])
+#                print(result[0], result[1])
                 plt.plot(result[0], result[1])
             #plt.plot(data[0])
             plt.xlabel('frequency [Hz]')
