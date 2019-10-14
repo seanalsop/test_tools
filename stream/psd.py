@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import argparse
 import acq400_hapi
 import concurrent.futures
+import sys
 
 
 def get_args():
